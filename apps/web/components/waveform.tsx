@@ -1,0 +1,4 @@
+"use client";
+import { useEffect, useRef } from "react";
+import WaveSurfer from "wavesurfer.js";
+export function AudioWaveform({url, active = false}: {url?: string; active?: boolean}) { const ref = useRef<HTMLDivElement>(null); useEffect(() => { if (!ref.current || !url) return; const wave = WaveSurfer.create({container: ref.current, waveColor: "#6e5aab", progressColor: "#39bfff", cursorColor: "#e7e1ff", height: 104, barWidth: 2, barGap: 2, barRadius: 4, normalize: true}); wave.load(url).catch(() => undefined); return () => wave.destroy(); }, [url]); if (!url) return <div className={`wave-placeholder ${active ? "active" : ""}`} aria-label="Decorative audio waveform">{Array.from({length: 72}, (_, index) => <i key={index} style={{height: `${20 + ((index * 19) % 74)}%`}} />)}</div>; return <div ref={ref} className="wave-canvas" />; }

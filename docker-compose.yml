@@ -1,0 +1,25 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      API_PROXY_URL: http://api:8000
+    ports: ["3000:3000"]
+    depends_on: [api]
+  api:
+    build:
+      context: apps/api
+    environment:
+      AURALIS_ENGINE: demo
+      AURALIS_DATABASE_URL: sqlite:////data/auralis.db
+      AURALIS_STORAGE_DIR: /storage
+      AURALIS_CORS_ORIGINS: http://localhost:3000
+    volumes:
+      - auralis-data:/data
+      - auralis-storage:/storage
+    ports: ["8000:8000"]
+
+volumes:
+  auralis-data:
+  auralis-storage:

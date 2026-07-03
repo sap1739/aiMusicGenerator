@@ -1,0 +1,16 @@
+{
+  "name": "auralis-monorepo",
+  "private": true,
+  "packageManager": "npm@10.9.8",
+  "workspaces": ["apps/web", "packages/shared"],
+  "overrides": {"next": {"postcss": "8.5.16"}},
+  "scripts": {
+    "dev": "npm run dev -w @auralis/web",
+    "build": "npm run build -w @auralis/web",
+    "lint": "npm run lint -w @auralis/web",
+    "typecheck": "npm run typecheck -w @auralis/web",
+    "test": "npm run test -w @auralis/web",
+    "api:dev": "cd apps/api && uv run uvicorn auralis_api.main:app --reload --port 8000",
+    "api:test": "cd apps/api && uv run pytest"
+  }
+}
